@@ -38,7 +38,7 @@ Humidity: {weatherresp['main']['humidity']}%")
     def get_flag(flag):
         f = open("countries.json")
         countries = json.load(f)
-        unicode = countries[flag]['unicode'].replace("+","000").replace(" ","").replace("U",r"\U")
+        unicode = countries[flag]['unicode'].replace("+","000").replace(" ","")
         return (unicode.encode())
 
     def get_uf(uf):
