@@ -25,7 +25,7 @@ class Formatter:
         responseplace = requests.get(urlplace).json()
         weather = requests.get(f"https://api.hgbrasil.com/weather?key={key}&lat={(responseplace[0]['lat'])}&lon={(responseplace[0]['lon'])}&user_ip=remote")
         weatherresp = weather.json()
-        return (f"Descrição do tempo: {weatherresp['description']}")
+        return (f"Descrição do tempo: {weatherresp['results']['description']}")
 
     def get_uf(uf):
         urluf = (f"https://covid19-brazil-api.now.sh/api/report/v1/brazil/uf/{uf}")
