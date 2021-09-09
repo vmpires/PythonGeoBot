@@ -34,7 +34,7 @@ Temperature: {celsiustemp:.0f}° Celsius\n\
 Feeling like: {celsiusfeelslike:.0f}° Celsius\n\
 Humidity: {weatherresp['main']['humidity']}%")
 
-    def get_flag(self, flag):
+    def get_flag(flag):
         f = open("countries.json")
         countries = json.load(f)
         unicode = countries[flag]['unicode'].replace("+","000").replace(" ","").replace("U",r"\U")
