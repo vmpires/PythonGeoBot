@@ -24,7 +24,8 @@ def help(update, context):
 
 def weather(update,context):
     try:
-        update.message.reply_text(f.get_weather(update.message.text))
+        place = update.message.text.split(" ")[1]
+        update.message.reply_text(f.get_weather(place))
     except Exception as e:
         print("Error running General Info. Command: " + str(update.message.text) + " | Error: " + str(e))
         update.message.reply_text("Não digite nada após /covidbr.")
