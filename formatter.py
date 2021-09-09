@@ -30,6 +30,7 @@ class Formatter:
         celsiusfeelslike = (weatherresp['main']['feels_like'] - 273) # Kelvin to Celsius
         flag = Formatter.get_flag(weatherresp['sys']['country'])
         return (f"Place: {weatherresp['name']}\n\
+Country: {flag}\n\
 Description: {weatherresp['weather'][0]['description']}\n\
 Temperature: {celsiustemp:.0f}° Celsius\n\
 Feeling like: {celsiusfeelslike:.0f}° Celsius\n\
@@ -38,8 +39,9 @@ Humidity: {weatherresp['main']['humidity']}%")
     def get_flag(flag):
         f = open("countries.json")
         countries = json.load(f)
-        unicode = countries[flag]['unicode'].replace("+","000").replace(" ","").replace("U",r"\U")
-        return unicode
+        for item in countries:
+            if item["code"] == flag:
+                return(item["emoji"] + item["name"])
 
     def get_uf(uf):
         urluf = (f"https://covid19-brazil-api.now.sh/api/report/v1/brazil/uf/{uf}")
