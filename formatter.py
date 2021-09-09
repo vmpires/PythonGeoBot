@@ -42,20 +42,3 @@ Humidity: {weatherresp['main']['humidity']}%")
         for item in countries:
             if item["code"] == flag:
                 return(f"{item['name']} {item['emoji']}")
-
-    def get_uf(uf):
-        urluf = (f"https://covid19-brazil-api.now.sh/api/report/v1/brazil/uf/{uf}")
-        responseuf = requests.get(urluf)
-        contentuf = responseuf.json()
-        return (f"Estado: {contentuf['state']}\nCasos: {Formatter.format_amount(contentuf['cases'])}\nMortes: {Formatter.format_amount(contentuf['deaths'])}")
-
-    def get_country(pais):
-        urlpais = (f"https://covid19-brazil-api.now.sh/api/report/v1/countries")
-        responsepais = requests.get(urlpais)
-        contentpais = responsepais.json()
-        if pais[0].islower():
-            pais = pais.capitalize()
-        for item in contentpais['data']:
-                if pais in item['country']:
-                    return (f"País: {item['country']}\nCasos confirmados: {Formatter.format_amount(item['confirmed'])}\nMortes: {Formatter.format_amount(item['deaths'])}")
-        return ("País não encontrado, tente novamente.")
