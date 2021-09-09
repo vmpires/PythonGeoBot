@@ -29,8 +29,8 @@ class Formatter:
         celsiusfeelslike = (weatherresp['main']['feels_like'] - 273) # Kelvin to Celsius
         return (f"Place: {weatherresp['name']}\n\
 Description: {weatherresp['weather'][0]['description']}\n\
-Temperature: {celsiustemp}° Celsius.\n\
-Feeling like: {celsiusfeelslike}° Celsius.\n\
+Temperature: {celsiustemp:.0f}° Celsius.\n\
+Feeling like: {celsiusfeelslike:.0f}° Celsius.\n\
 Humidity: {weatherresp['main']['humidity']}%.")
 
     def get_uf(uf):
