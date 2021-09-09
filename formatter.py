@@ -1,6 +1,7 @@
 import requests
 import os
 import urllib.parse as urlparse
+import json
 
 class Formatter:
 
@@ -27,11 +28,18 @@ class Formatter:
         weatherresp = weather.json()
         celsiustemp = (weatherresp['main']['temp'] - 273) # Kelvin to Celsius
         celsiusfeelslike = (weatherresp['main']['feels_like'] - 273) # Kelvin to Celsius
-        return (f"Place: \U0001F1EB\U0001F1F7 {weatherresp['name']}\n\
+        flagcode = Formatter.get_flag(weatherresp['sys']['country'])
+        return (f"Place: {flagcode} {weatherresp['name']}\n\
 Description: {weatherresp['weather'][0]['description']}\n\
 Temperature: {celsiustemp:.0f}° Celsius\n\
 Feeling like: {celsiusfeelslike:.0f}° Celsius\n\
 Humidity: {weatherresp['main']['humidity']}%")
+
+    def get_flag(self, flag):
+        f = open("countries.json")
+        countries = json.load(f)
+        unicode = countries[flag]['unicode'].replace("+","000").replace(" ","").replace("U",r"\U")
+        return(unicode)
 
     def get_uf(uf):
         urluf = (f"https://covid19-brazil-api.now.sh/api/report/v1/brazil/uf/{uf}")
