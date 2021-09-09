@@ -41,7 +41,7 @@ Humidity: {weatherresp['main']['humidity']}%")
         countries = json.load(f)
         for item in countries:
             if item["code"] == flag:
-                return(item["emoji"] + item["name"])
+                return(f"{item['name']} {item['emoji']}")
 
     def get_uf(uf):
         urluf = (f"https://covid19-brazil-api.now.sh/api/report/v1/brazil/uf/{uf}")
