@@ -25,10 +25,12 @@ class Formatter:
         responseplace = requests.get(urlplace).json()
         weather = requests.get(f"http://api.openweathermap.org/data/2.5/weather?lat={(responseplace[0]['lat'])}&lon={(responseplace[0]['lon'])}&appid={key}")
         weatherresp = weather.json()
+        celsiustemp = (weatherresp['main']['temp'] - 273) # Kelvin to Celsius
+        celsiusfeelslike = (weatherresp['main']['feels_like'] - 273) # Kelvin to Celsius
         return (f"Place: {weatherresp['name']}\n\
 Description: {weatherresp['weather'][0]['description']}\n\
-Temperature: {weatherresp['main']['temp']}º Fahrenheit.\n\
-Feeling like: {weatherresp['main']['feels_like']}º Fahrenheit.\n\
+Temperature: {celsiustemp}° Celsius.\n\
+Feeling like: {celsiusfeelslike}° Celsius.\n\
 Humidity: {weatherresp['main']['humidity']}%.")
 
     def get_uf(uf):
