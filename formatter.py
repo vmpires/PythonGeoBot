@@ -20,12 +20,16 @@ class Formatter:
             return f"{'{:,}'.format(amount)}".replace(',', '.')
 
     def get_weather(country):
-        key = os.environ['hgbrasilkey']
+        key = os.environ['openweatherkey']
         urlplace = 'https://nominatim.openstreetmap.org/search/'+ urlparse.quote(country) +'?format=json'
         responseplace = requests.get(urlplace).json()
-        weather = requests.get(f"https://api.hgbrasil.com/weather?key={key}&lat={(responseplace[0]['lat'])}&lon={(responseplace[0]['lon'])}&user_ip=remote")
+        weather = requests.get(f"http://api.openweathermap.org/data/2.5/weather?lat={(responseplace[0]['lat'])}&lon={(responseplace[0]['lon'])}&appid={key}")
         weatherresp = weather.json()
-        return (f"Descrição do tempo: {weatherresp['results']['description']}")
+        return (f"Place: {weatherresp['name']}\n\
+Description: {weatherresp['weather'][0]['description']}\n\
+Temperature: {weatherresp['main']['temp']}º Fahrenheit.\n\
+Feeling like: {weatherresp['main']['feels_like']}º Fahrenheit.\n\
+Humidity: {weatherresp['main']['humidity']}%.")
 
     def get_uf(uf):
         urluf = (f"https://covid19-brazil-api.now.sh/api/report/v1/brazil/uf/{uf}")

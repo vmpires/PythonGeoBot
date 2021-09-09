@@ -19,12 +19,13 @@ def start(update, context):
 def help(update, context):
     """Send a message when the command /help is issued."""
     update.message.reply_text("This is a Geography Bot designed to help you find yourself or somewhere.\n\
-    To check the current weather of a place, type /weather nameoftheplace.\n\
-    To check aditional information of a place, type /placeinfo nameoftheplace.")
+To check the current weather of a place, type /weather nameoftheplace.\n\
+To check aditional information of a place, type /placeinfo nameoftheplace.")
 
 def weather(update,context):
     try:
-        place = update.message.text.split(" ")[1]
+        place = update.message.text.split(" ")[1:]
+        place = " ".join(place)
         update.message.reply_text(f.get_weather(place))
     except Exception as e:
         print("Error running General Info. Command: " + str(update.message.text) + " | Error: " + str(e))
