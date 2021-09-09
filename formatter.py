@@ -31,7 +31,7 @@ class Formatter:
         celsiusmax = (weatherresp['main']['temp_max'] - 273)
         celsiusmin = (weatherresp['main']['temp_min'] - 273)
         flag = Formatter.get_flag(weatherresp['sys']['country'])
-        return (f"City: {weatherresp['name']}\n\
+        return (f"Place: {weatherresp['name']}\n\
 Country: {flag}\n\
 Description: {weatherresp['weather'][0]['description']}\n\
 Current Temperature: {celsiustemp:.0f}° Celsius\n\
