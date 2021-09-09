@@ -27,7 +27,7 @@ class Formatter:
         weatherresp = weather.json()
         celsiustemp = (weatherresp['main']['temp'] - 273) # Kelvin to Celsius
         celsiusfeelslike = (weatherresp['main']['feels_like'] - 273) # Kelvin to Celsius
-        return (f"Place: \U0001F1EB \U0001F1F7 {weatherresp['name']}\n\
+        return (f"Place: \U0001F1EB\U0001F1F7 {weatherresp['name']}\n\
 Description: {weatherresp['weather'][0]['description']}\n\
 Temperature: {celsiustemp:.0f}° Celsius\n\
 Feeling like: {celsiusfeelslike:.0f}° Celsius\n\
