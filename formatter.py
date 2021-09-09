@@ -22,7 +22,7 @@ class Formatter:
     def get_weather(country):
         key = os.environ['hgbrasilkey']
         urlplace = 'https://nominatim.openstreetmap.org/search/'+ urlparse.quote(country) +'?format=json'
-        responseplace = requests.get(urlplace).json
+        responseplace = requests.get(urlplace).json()
         weather = requests.get(f"https://api.hgbrasil.com/weather?key={(key['key'])}&lat={(responseplace[0]['lat'])}&lon={(responseplace[0]['lon'])}&user_ip=remote")
         weatherresp = weather.json()
         return (weatherresp)
