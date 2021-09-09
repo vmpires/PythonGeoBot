@@ -8,4 +8,5 @@ responseplace = requests.get(urlplace).json()
 weather = requests.get(f"https://api.hgbrasil.com/weather?key={key}&lat={(responseplace[0]['lat'])}&lon={(responseplace[0]['lon'])}&user_ip=remote")
 weatherresp = weather.json()
 
+print(type(weatherresp))
 print (weatherresp)
