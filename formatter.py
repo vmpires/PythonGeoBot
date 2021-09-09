@@ -38,7 +38,7 @@ Humidity: {weatherresp['main']['humidity']}%")
         f = open("countries.json")
         countries = json.load(f)
         unicode = countries[flag]['unicode'].replace("+","000").replace(" ","").replace("U",r"\U")
-        return unicode
+        return f"u{unicode}"
 
     def get_uf(uf):
         urluf = (f"https://covid19-brazil-api.now.sh/api/report/v1/brazil/uf/{uf}")
