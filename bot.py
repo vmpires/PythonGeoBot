@@ -20,7 +20,7 @@ def help(update, context):
     """Send a message when the command /help is issued."""
     update.message.reply_text("This is a Geography Bot designed to help you find yourself or somewhere.\n\
 To check the current weather of a place, type /weather (nameoftheplace).\n\
-To check information about a country/state/city/monument/borough, type /placeinfo (nameoftheplace).")
+To check information about a country/state/city/monument, type /placeinfo (nameoftheplace).")
 
 def weather(update,context):
     """Sends the weather of a given place with /weather"""
