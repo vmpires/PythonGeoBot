@@ -14,7 +14,7 @@ TOKEN = os.environ['telegramkey']
 
 def start(update, context):
     """Send a message when the command /start is issued."""
-    update.message.reply_text('Hello! Welcome to GeoApp, type or click /help for instructions.')
+    update.message.reply_text('Hello! Welcome to Python GeoBot, type or click /help for instructions.')
 
 def help(update, context):
     """Send a message when the command /help is issued."""
