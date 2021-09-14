@@ -6,21 +6,6 @@ import wikipedia as wiki
 
 class Formatter:
 
-    def format_amount(amount):
-
-        if amount < 10**6:
-            # Thousands
-            return f"{'{:,}'.format(amount)}".replace(',', '.')
-        elif amount < 10**9:
-            # Millions
-            return f"{'{:,}'.format(amount)}".replace(',', '.')
-        elif amount < 10**12:
-                # Billions
-            return f"{'{:,}'.format(amount)}".replace(',', '.')
-        else:
-            # Trillions
-            return f"{'{:,}'.format(amount)}".replace(',', '.')
-
     def get_weather(place):
         key = os.environ['openweatherkey']
         urlplace = 'https://nominatim.openstreetmap.org/search/'+ urlparse.quote(place) +'?format=json'
