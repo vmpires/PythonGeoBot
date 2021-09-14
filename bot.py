@@ -20,9 +20,10 @@ def help(update, context):
     """Send a message when the command /help is issued."""
     update.message.reply_text("This is a Geography Bot designed to help you find yourself or somewhere.\n\
 To check the current weather of a place, type /weather (nameoftheplace).\n\
-To check information about a country/state/city, type /placeinfo (nameofit).")
+To check information about a country/state/city/monument/borough, type /placeinfo (nameoftheplace).")
 
 def weather(update,context):
+    """Sends the weather of a given place with /weather"""
     try:
         place = update.message.text.split(" ")[1:]
         place = " ".join(place)
@@ -32,6 +33,7 @@ def weather(update,context):
         update.message.reply_text("Oops, place not found or not existent.")
 
 def placeinfo(update,context):
+    """Sends Wikipedia info of a place with /placeinfo"""
     try:
         place = update.message.text.split(" ")[1:]
         place = " ".join(place)
