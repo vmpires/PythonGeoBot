@@ -38,14 +38,8 @@ def myweather(update,context):
     """Sends the weather of the given geolocation"""
     update.message.reply_text("Send me your geolocation so I can check it up for you.")
 
-def handle_location(bot, update):
-    message = None
-    if update.edited_message:
-        message = update.edited_message
-    else:
-        message = update.message
-    
-    update.message.reply_text(message.location.latitude, message.location.longitude)
+def handle_location(update, message):    
+    update.message.reply_text(message['location']['latitude'], message['location']['longitude'])
 
 def placeinfo(update,context):
     """Sends Wikipedia info of a place with /placeinfo"""
