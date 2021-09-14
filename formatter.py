@@ -51,18 +51,21 @@ Atmospheric Pressure: {weatherresp['main']['pressure']} hPa")
                 return(f"{item['name']} {item['emoji']}")
     
     def get_placeinfo(place):
+        
         key = os.environ['openweatherkey']
         urlplace = 'https://nominatim.openstreetmap.org/search/'+ urlparse.quote(place) +'?format=json'
         responseplace = requests.get(urlplace).json()
         weather = requests.get(f"http://api.openweathermap.org/data/2.5/weather?lat={(responseplace[0]['lat'])}&lon={(responseplace[0]['lon'])}&appid={key}")
         weatherresp = weather.json()
         flag = Formatter.get_flag(weatherresp['sys']['country'])
+        
         try:
             wikisum = wiki.summary(place)
             latlonresult = wiki.geosearch(responseplace[0]['lat'], responseplace[0]['lon'], title=None, results=5, radius=3000)
         except:
             latlonresult = wiki.geosearch(responseplace[0]['lat'], responseplace[0]['lon'], title=None, results=5, radius=3000)
             wikisum = wiki.summary(latlonresult[0])
-            relplaces = " ".join(latlonresult)
+        
+        relplaces = " ".join(latlonresult)
         endresult = f"{wikisum}\n\nCountry: {flag}\n\nRelated places: {relplaces}"
         return (endresult)
