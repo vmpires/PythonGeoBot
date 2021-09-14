@@ -29,7 +29,7 @@ def weather(update,context):
         update.message.reply_text(f.get_weather(place))
     except Exception as e:
         print("Error running General Info. Command: " + str(update.message.text) + " | Error: " + str(e))
-        update.message.reply_text("Place not found or not existent.")
+        update.message.reply_text("Oops, place not found or not existent.")
 
 def placeinfo(update,context):
     try:
@@ -38,7 +38,7 @@ def placeinfo(update,context):
         update.message.reply_text(f.get_placeinfo(place))
     except Exception as e:
         print("Error running UF. Command: " + str(update.message.text) + " | Error: " + str(e))
-        update.message.reply_text("Place not found or not existent.")
+        update.message.reply_text("Oops, place not found or not existent.")
 
 def echo(update, context):
     """Echo the user message."""
