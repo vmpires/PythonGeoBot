@@ -2,6 +2,7 @@ import requests
 import os
 import urllib.parse as urlparse
 import json
+import wikipedia as wiki
 
 class Formatter:
 
@@ -20,9 +21,9 @@ class Formatter:
             # Trillions
             return f"{'{:,}'.format(amount)}".replace(',', '.')
 
-    def get_weather(country):
+    def get_weather(place):
         key = os.environ['openweatherkey']
-        urlplace = 'https://nominatim.openstreetmap.org/search/'+ urlparse.quote(country) +'?format=json'
+        urlplace = 'https://nominatim.openstreetmap.org/search/'+ urlparse.quote(place) +'?format=json'
         responseplace = requests.get(urlplace).json()
         weather = requests.get(f"http://api.openweathermap.org/data/2.5/weather?lat={(responseplace[0]['lat'])}&lon={(responseplace[0]['lon'])}&appid={key}")
         weatherresp = weather.json()
@@ -48,3 +49,19 @@ Atmospheric Pressure: {weatherresp['main']['pressure']} hPa")
         for item in countries:
             if item["code"] == flag:
                 return(f"{item['name']} {item['emoji']}")
+    
+    def get_placeinfo(place):
+        key = os.environ['openweatherkey']
+        urlplace = 'https://nominatim.openstreetmap.org/search/'+ urlparse.quote(place) +'?format=json'
+        responseplace = requests.get(urlplace).json()
+        weather = requests.get(f"http://api.openweathermap.org/data/2.5/weather?lat={(responseplace[0]['lat'])}&lon={(responseplace[0]['lon'])}&appid={key}")
+        weatherresp = weather.json()
+        flag = Formatter.get_flag(weatherresp['sys']['country'])
+        try:
+            wikisum = wiki.summary(place)
+            latlonresult = wiki.geosearch(responseplace[0]['lat'], responseplace[0]['lon'], title=None, results=5, radius=3000)
+        except:
+            latlonresult = wiki.geosearch(responseplace[0]['lat'], responseplace[0]['lon'], title=None, results=5, radius=3000)
+            wikisum = wiki.summary(latlonresult[0])
+        endresult = "\n" + wikisum + "\n\nRelated places: " + ", ".join(latlonresult)
+        return f"Country: {flag}{endresult}"

@@ -20,7 +20,7 @@ def help(update, context):
     """Send a message when the command /help is issued."""
     update.message.reply_text("This is a Geography Bot designed to help you find yourself or somewhere.\n\
 To check the current weather of a place, type /weather (nameoftheplace).\n\
-To check aditional information of a place, type /placeinfo (nameoftheplace).")
+To check aditional information of a country/state/city, type /placeinfo (nameofit).")
 
 def weather(update,context):
     try:
@@ -33,11 +33,12 @@ def weather(update,context):
 
 def placeinfo(update,context):
     try:
-        UF = update.message.text.split(" ")[1]
-        update.message.reply_text(f.get_uf(UF))
+        place = update.message.text.split(" ")[1:]
+        place = " ".join(place)
+        update.message.reply_text(f.get_placeinfo(place))
     except Exception as e:
         print("Error running UF. Command: " + str(update.message.text) + " | Error: " + str(e))
-        update.message.reply_text("Esta não é uma Unidade Federativa válida.")
+        update.message.reply_text("Place not found or not existent.")
 
 def echo(update, context):
     """Echo the user message."""
