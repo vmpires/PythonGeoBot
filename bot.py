@@ -1,6 +1,7 @@
 import logging
 import os
 from formatter import Formatter as f
+from telegram.base import TelegramObject
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 
 PORT = int(os.environ.get('PORT', 5000))
@@ -20,6 +21,7 @@ def help(update, context):
     """Send a message when the command /help is issued."""
     update.message.reply_text("This is a Geography Bot designed to help you find yourself or somewhere.\n\
 To check the current weather of a place, type /weather (nameoftheplace).\n\
+To check your location weather, type /myweather.\n\
 To check information about a country/state/city/monument, type /placeinfo (nameoftheplace).")
 
 def weather(update,context):
@@ -31,6 +33,13 @@ def weather(update,context):
     except Exception as e:
         logger.info("Error running General Info. Command: " + str(update.message.text) + " | Error: " + str(e))
         update.message.reply_text("Oops, place not found or not existent.")
+
+def myweather(update,context):
+    """Sends the weather of the given geolocation"""
+    update.message.reply_text("Send me your geolocation so I can check it up for you.")
+
+def handle_location(message):
+    print("{0}, {1}".format(message.location.latitude, message.location.longitude))
 
 def placeinfo(update,context):
     """Sends Wikipedia info of a place with /placeinfo"""
@@ -64,8 +73,9 @@ def main():
     dp.add_handler(CommandHandler("start", start))
     dp.add_handler(CommandHandler("help", help))
     dp.add_handler(CommandHandler("weather", weather))
+    dp.add_handler(CommandHandler("myweather", myweather))
     dp.add_handler(CommandHandler("placeinfo", placeinfo))
-
+    dp.add_handler(TelegramObject(['location'], handle_location))
 
     # on noncommand i.e message - echo the message on Telegram
     dp.add_handler(MessageHandler(Filters.text, echo))
