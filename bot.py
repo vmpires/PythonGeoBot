@@ -38,8 +38,8 @@ def myweather(update,context):
     """Sends the weather of the given geolocation"""
     update.message.reply_text("Send me your geolocation so I can check it up for you.")
 
-def handle_location(message):
-    print("{0}, {1}".format(message.location.latitude, message.location.longitude))
+def handle_location(update, message):
+    update.message.reply_text("{0}, {1}".format(message.location.latitude, message.location.longitude))
 
 def placeinfo(update,context):
     """Sends Wikipedia info of a place with /placeinfo"""
@@ -75,7 +75,7 @@ def main():
     dp.add_handler(CommandHandler("weather", weather))
     dp.add_handler(CommandHandler("myweather", myweather))
     dp.add_handler(CommandHandler("placeinfo", placeinfo))
-    dp.add_handler(TelegramObject(['location'], handle_location))
+    dp.add_handler(MessageHandler(Filters.location, handle_location))
 
     # on noncommand i.e message - echo the message on Telegram
     dp.add_handler(MessageHandler(Filters.text, echo))
