@@ -66,6 +66,6 @@ Atmospheric Pressure: {weatherresp['main']['pressure']} hPa")
             latlonresult = wiki.geosearch(responseplace[0]['lat'], responseplace[0]['lon'], title=None, results=5, radius=3000)
             wikisum = wiki.summary(latlonresult[0])
         
-        relplaces = " ".join(latlonresult)
+        relplaces = ", ".join(latlonresult)
         endresult = f"{wikisum}\n\nCountry: {flag}\n\nRelated places: {relplaces}"
         return (endresult)
