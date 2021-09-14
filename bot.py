@@ -39,7 +39,7 @@ def myweather(update,context):
     update.message.reply_text("Send me your geolocation so I can check it up for you.")
 
 def handle_location(update, message):
-    message = [update.location.latitude, update.location.longitude]    
+    message = [update.message.location.latitude, update.message.location.longitude]    
     update.message.reply_text(message)
 
 def placeinfo(update,context):
