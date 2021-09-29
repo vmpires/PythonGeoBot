@@ -12,6 +12,13 @@ class Formatter:
     def kelvintocelsius(value):
         return (value-273)
 
+    def get_flag(flag):
+        f = open("countries.json")
+        countries = json.load(f)
+        for item in countries:
+            if item["code"] == flag:
+                return(f"{item['name']} {item['emoji']}")
+
     def get_weather(self, place):
         
         if isinstance(place, str):
@@ -23,28 +30,17 @@ class Formatter:
             weather = requests.get(f"http://api.openweathermap.org/data/2.5/weather?lat={place[0]}&lon={place[1]}&appid={self.key}")
             weatherresp = weather.json()
 
-        celsiustemp = self.kelvintocelsius(weatherresp['main']['temp']) # Kelvin to Celsius
-        celsiusfeelslike = self.kelvintocelsius(weatherresp['main']['feels_like']) # Kelvin to Celsius
-        celsiusmax = self.kelvintocelsius(weatherresp['main']['temp_max'])
-        celsiusmin = self.kelvintocelsius(weatherresp['main']['temp_min'])
-        flag = self.get_flag(weatherresp['sys']['country'])
         return (f"Place: {weatherresp['name']}\n\
-Country: {flag}\n\
+Country: {self.get_flag(weatherresp['sys']['country'])}\n\
 Description: {weatherresp['weather'][0]['description']}\n\
-Current Temperature: {celsiustemp:.0f}° Celsius\n\
-Feeling like: {celsiusfeelslike:.0f}° Celsius\n\
-Max Temperature: {celsiusmax:.0f}° Celsius\n\
-Min Temperature: {celsiusmin:.0f}° Celsius\n\
+Current Temperature: {self.kelvintocelsius(weatherresp['main']['temp']):.0f}° Celsius\n\
+Feeling like: {self.kelvintocelsius(weatherresp['main']['feels_like']):.0f}° Celsius\n\
+Max Temperature: {self.kelvintocelsius(weatherresp['main']['temp_max']):.0f}° Celsius\n\
+Min Temperature: {self.kelvintocelsius(weatherresp['main']['temp_min']):.0f}° Celsius\n\
 Humidity: {weatherresp['main']['humidity']}%\n\
 Wind Speed: {weatherresp['wind']['speed']} m/s\n\
 Atmospheric Pressure: {weatherresp['main']['pressure']} hPa")
 
-    def get_flag(flag):
-        f = open("countries.json")
-        countries = json.load(f)
-        for item in countries:
-            if item["code"] == flag:
-                return(f"{item['name']} {item['emoji']}")
     
     def get_placeinfo(self, place):
         urlplace = 'https://nominatim.openstreetmap.org/search/'+ urlparse.quote(place) +'?format=json'
