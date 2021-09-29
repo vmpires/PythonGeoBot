@@ -49,7 +49,7 @@ def placeinfo(update,context):
         place = " ".join(place)
         update.message.reply_text(f.get_placeinfo(place))
     except Exception as e:
-        logger.info("Error running UF. Command: " + str(update.message.text) + " | Error: " + str(e))
+        logger.info("Error running Place Info. Command: " + str(update.message.text) + " | Error: " + str(e))
         update.message.reply_text("Oops, place not found or not existent.")
 
 def echo(update, context):
