@@ -6,38 +6,29 @@ import wikipedia as wiki
 
 class Formatter:
 
-    def get_weather(place):
-        key = os.environ['openweatherkey']
-        urlplace = 'https://nominatim.openstreetmap.org/search/'+ urlparse.quote(place) +'?format=json'
-        responseplace = requests.get(urlplace).json()
-        weather = requests.get(f"http://api.openweathermap.org/data/2.5/weather?lat={(responseplace[0]['lat'])}&lon={(responseplace[0]['lon'])}&appid={key}")
-        weatherresp = weather.json()
-        celsiustemp = (weatherresp['main']['temp'] - 273) # Kelvin to Celsius
-        celsiusfeelslike = (weatherresp['main']['feels_like'] - 273) # Kelvin to Celsius
-        celsiusmax = (weatherresp['main']['temp_max'] - 273)
-        celsiusmin = (weatherresp['main']['temp_min'] - 273)
-        flag = Formatter.get_flag(weatherresp['sys']['country'])
-        return (f"Place: {weatherresp['name']}\n\
-Country: {flag}\n\
-Description: {weatherresp['weather'][0]['description']}\n\
-Current Temperature: {celsiustemp:.0f}° Celsius\n\
-Feeling like: {celsiusfeelslike:.0f}° Celsius\n\
-Max Temperature: {celsiusmax:.0f}° Celsius\n\
-Min Temperature: {celsiusmin:.0f}° Celsius\n\
-Humidity: {weatherresp['main']['humidity']}%\n\
-Wind Speed: {weatherresp['wind']['speed']} m/s\n\
-Atmospheric Pressure: {weatherresp['main']['pressure']} hPa")
+    def __init__(self):
+        self.key = os.environ['openweatherkey']
+    
+    def kelvintocelsius(value):
+        return (value-273)
 
-    def my_weather(lat,lon):
-            key = os.environ['openweatherkey']
-            weather = requests.get(f"http://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={key}")
+    def get_weather(self, place):
+        
+        if isinstance(place, str):
+            urlplace = 'https://nominatim.openstreetmap.org/search/'+ urlparse.quote(place) +'?format=json'
+            responseplace = requests.get(urlplace).json()
+            weather = requests.get(f"http://api.openweathermap.org/data/2.5/weather?lat={(responseplace[0]['lat'])}&lon={(responseplace[0]['lon'])}&appid={self.key}")
             weatherresp = weather.json()
-            celsiustemp = (weatherresp['main']['temp'] - 273) # Kelvin to Celsius
-            celsiusfeelslike = (weatherresp['main']['feels_like'] - 273) # Kelvin to Celsius
-            celsiusmax = (weatherresp['main']['temp_max'] - 273)
-            celsiusmin = (weatherresp['main']['temp_min'] - 273)
-            flag = Formatter.get_flag(weatherresp['sys']['country'])
-            return (f"Your current weather:\nPlace: {weatherresp['name']}\n\
+        elif isinstance(place, list):
+            weather = requests.get(f"http://api.openweathermap.org/data/2.5/weather?lat={place[0]}&lon={place[1]}&appid={self.key}")
+            weatherresp = weather.json()
+
+        celsiustemp = self.kelvintocelsius(weatherresp['main']['temp']) # Kelvin to Celsius
+        celsiusfeelslike = self.kelvintocelsius(weatherresp['main']['feels_like']) # Kelvin to Celsius
+        celsiusmax = self.kelvintocelsius(weatherresp['main']['temp_max'])
+        celsiusmin = self.kelvintocelsius(weatherresp['main']['temp_min'])
+        flag = self.get_flag(weatherresp['sys']['country'])
+        return (f"Place: {weatherresp['name']}\n\
 Country: {flag}\n\
 Description: {weatherresp['weather'][0]['description']}\n\
 Current Temperature: {celsiustemp:.0f}° Celsius\n\
@@ -55,12 +46,10 @@ Atmospheric Pressure: {weatherresp['main']['pressure']} hPa")
             if item["code"] == flag:
                 return(f"{item['name']} {item['emoji']}")
     
-    def get_placeinfo(place):
-        
-        key = os.environ['openweatherkey']
+    def get_placeinfo(self, place):
         urlplace = 'https://nominatim.openstreetmap.org/search/'+ urlparse.quote(place) +'?format=json'
         responseplace = requests.get(urlplace).json()
-        weather = requests.get(f"http://api.openweathermap.org/data/2.5/weather?lat={(responseplace[0]['lat'])}&lon={(responseplace[0]['lon'])}&appid={key}")
+        weather = requests.get(f"http://api.openweathermap.org/data/2.5/weather?lat={(responseplace[0]['lat'])}&lon={(responseplace[0]['lon'])}&appid={self.key}")
         weatherresp = weather.json()
         flag = Formatter.get_flag(weatherresp['sys']['country'])
         
