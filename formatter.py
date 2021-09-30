@@ -1,4 +1,3 @@
-import formatter
 import requests
 import os
 import urllib.parse as urlparse
